@@ -1,12 +1,43 @@
 {
-    "type": "template",
-    "data": "{\"data\":\"H4sIAAAAAAAA/3WOsQrCQBBEfyUO2KWwvs5WEARLEVlza4he7iS3ihLue/wPv8y9JI2I1e4Ob2emx9GF6hJhdj0aCzPeKKdpwHf2ojd1tVIKCbcZ3yfVKmmCV2gVGo9U/rG4Onpyd5joX6txG5T8Lo+cZ0koS55ahinwftHc8oluToqzxrGdIWmH6ILALNJXny17u+YYqWa1Eg1khbB0bjN0iVD+AwveD4v8AAAA\",\"author\":\"Kindling\",\"name\":\"\\\",\\"extra\\": [
-        {\\"text\\":\\"Compiled \\",\\"italic\\": false,\\"color\\":\\"#FF8855\\"
+    "blocks": [
+        {
+            "id": "block",
+            "block": "event",
+            "args": {
+                "items": []
+            },
+            "action": "Join"
         },
-        {\\"italic\\": false,\\"color\\":\\"dark_gray\\",\\"text\\":\\"» \\"
+        {
+            "id": "block",
+            "block": "if_player",
+            "args": {
+                "items": [
+                    {
+                        "item": {
+                            "id": "bl_tag",
+                            "data": {
+                                "option": "Developer or builder",
+                                "tag": "Permission",
+                                "action": "HasPermission",
+                                "block": "if_player"
+                            }
+                        },
+                        "slot": 26
+                    }
+                ]
+            },
+            "action": "HasPermission"
         },
-        {\\"italic\\": false,\\"color\\":\\"#FFCC99\\",\\"text\\":\\"Player Event: Join\\"
+        {
+            "id": "bracket",
+            "direct": "open",
+            "type": "norm"
+        },
+        {
+            "id": "bracket",
+            "direct": "close",
+            "type": "norm"
         }
-    ],\\"a\\":\\"\"}",
-    "source": "Kindling"
+    ]
 }

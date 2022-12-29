@@ -12,7 +12,8 @@ pub enum Value {
     Potion(Potion),
     Variable(Variable),
     GameValue(GameValue),
-    Item(Item)
+    Item(Item),
+    Tag(Tag)
 }
 
 pub type DFNum = f32;
@@ -176,4 +177,9 @@ pub struct Attribute {
 }
 pub enum AttributeOperation {
     AddModifier, MultiplyBase, MultiplyModifier
+}
+
+pub struct Tag {
+    pub name: String,
+    pub option: String
 }
