@@ -27,7 +27,7 @@ impl Program {
             .unwrap();
         for l in self.lines.iter() {
             let message = format!(
-                r#"{{"type":"template","data":"{{\"data\":\"{2}\",\"author\":\"{0}\",\"name\":\"§x§f§f§8§8§5§5Compiled §8» §x§f§f§c§c§9§9{1}\"}}","source":"Kindling"}}"#, 
+                r##"{{"source":"Kindling","type":"nbt","data":"{{\"id\":\"minecraft:ender_chest\",\"Count\":1,\"tag\":{{display:{{Name:\'{{\"extra\":[{{\"italic\":false,\"color\":\"#FF8855\",\"text\":\"Compiled \"}},{{\"italic\":false,\"color\":\"dark_gray\",\"text\":\"» \"}},{{\"italic\":false,\"color\":\"#FFCC99\",\"text\":\"{1}\"}}],\"text\":\"\"}}\'}},PublicBukkitValues:{{\"hypercube:codetemplatedata\":\'{{\"author\":\"{0}\",\"name\":\"&x&f&f&8&8&5&5Compiled &8» &x&f&f&c&c&9&9{1}\",\"version\":1,\"code\":\"{2}\"}}\'}}}}}}"}}"##, 
                 self.owner.as_ref().map_or_else(|| "Kindling", |n| n),
                 l.name(),
                 l.compile()
