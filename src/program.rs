@@ -23,18 +23,18 @@ impl Program {
     }
     pub fn compile_program_ws(&self) {
         let mut client = ClientBuilder::new("ws://localhost:31371/codeutilities/item").unwrap()
-            .connect(None)
+            .connect_insecure()
             .unwrap();
         for l in self.lines.iter() {
             let message = format!(
-                r#"{{"type":"template","data":"{{\"data\":\"{2}\",\"author\":\"{0}\",\"name\":\"§x§f§f§8§8§5§5Compiled &8» §x§f§f§c§c§9§9{1}\"}}","source":"Kindling"}}"#, 
+                r#"{{"type":"template","data":"{{\"data\":\"{2}\",\"author\":\"{0}\",\"name\":\"§x§f§f§8§8§5§5Compiled §8» §x§f§f§c§c§9§9{1}\"}}","source":"Kindling"}}"#, 
                 self.owner.as_ref().map_or_else(|| "Kindling", |n| n),
                 l.name(),
                 l.compile()
             );
             client.send_message(&websocket::Message::text(message)).expect("Something went wrong while sending message to recode");
+            let _ = client.recv_message().unwrap();
         }
-        client.shutdown().expect("Failed to close down server... somehow");
     }
     pub fn new() -> Self {
         Self { lines: vec![], owner: None }
