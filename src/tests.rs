@@ -2,7 +2,7 @@
 
 use crate::{code_line::CodeLine, statements::Statement, values::{Selector, ParameterList, Text, Value}};
 
-use crate::{program::Program, values::Tag, params::ParamBuilder};
+use crate::{program::Program, values::{Tag, Location}, params::ParamBuilder};
 
 
 
@@ -60,5 +60,28 @@ fn test_recode2() {
             Statement::Close
         ])
     ]);
-    p.compile_program_ws();
+    p.compile_program_ws(25);
+}
+
+
+#[test]
+fn test_recode3() {
+    let p = Program::new_from(vec![
+        CodeLine::new_from(vec![ 
+            Statement::PlayerEvent(String::from("Join")),
+            Statement::IfPlayer { action: String::from("HasPermission"), parameters: ParamBuilder::new().tag(Tag{name: String::from("Permission"), option: String::from("Developer")}).complete_unchecked(), selector: Selector::Default, not: false },
+            Statement::PlayerAction { action: String::from("SendMessage"), parameters: ParamBuilder::new().param(Value::Text(Text(String::from("§e[DEV] §a%default joined!")))).complete_unchecked(), selector: Selector::AllPlayers },
+            Statement::Close,
+            Statement::Else,
+            Statement::PlayerAction { action: String::from("SendMessage"), parameters: ParamBuilder::new().param(Value::Text(Text(String::from("§a%default joined!")))).complete_unchecked(), selector: Selector::AllPlayers },
+            Statement::Close
+        ]), 
+        CodeLine::new_from(vec![ 
+            Statement::PlayerEvent(String::from("RightClick")),
+            Statement::IfPlayer { action: String::from("IsLookingAt"), parameters: ParamBuilder::new().tag(Tag{name: String::from("Fluid Mode"), option: String::from("Ignore fluids")}).param(Value::Location(Location { x:25., y:49., z:27., pitch:0., yaw:0. })).complete_unchecked(), selector: Selector::Default, not: false },
+            Statement::PlayerAction { action: String::from("SendMessage"), parameters: ParamBuilder::new().param(Value::Text(Text(String::from("§6Let's go!")))).complete_unchecked(), selector: Selector::Default },
+            Statement::Close,
+        ]), 
+    ]);
+    p.compile_program_ws(25);
 }
