@@ -33,6 +33,7 @@ impl Program {
                 l.name(),
                 l.compile()
             );
+            println!("{}", message);
             client.send_message(&websocket::Message::text(message)).expect("Something went wrong while sending message to recode");
             let _ = client.recv_message().unwrap();
             std::thread::sleep(time::Duration::from_millis(100));

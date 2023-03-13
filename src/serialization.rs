@@ -64,7 +64,7 @@ impl Value {
                 )
             }
             Value::Item(_) => todo!(),
-            Value::Tag(Tag{ name, option }) => {
+            Value::Tag(Tag{ name, option, var }) => {
                 let action = match stmnt {
                     Statement::PlayerEvent(n) |
                     Statement::EntityEvent(n) => n,
@@ -87,12 +87,23 @@ impl Value {
                     Statement::Repeat { action, subaction, .. } |
                     Statement::SelectObject { action, subaction, .. } => subaction.as_ref().unwrap_or_else(|| action)
                 };
-                format!(
-                    r#"{{"item":{{"id":"bl_tag","data":{{"option":"{option}","tag":"{name}","action":"{}","block":"{}"}}}},"slot":{}}}"#, 
-                    action,
-                    stmnt.technical_name(),
-                    slot
-                )
+                if let Some(v) = var {
+                    format!(
+                        r#"{{"item":{{"id":"bl_tag","data":{{"option":"{option}","tag":"{name}","action":"{}","block":"{}","variable":{{"id":"var","data":{{"name":"{}","scope":"{}"}}}}}}}},"slot":{}}}"#, 
+                        action,
+                        stmnt.technical_name(),
+                        v.name,
+                        v.scope.serialize(),
+                        slot
+                    )
+                } else {
+                    format!(
+                        r#"{{"item":{{"id":"bl_tag","data":{{"option":"{option}","tag":"{name}","action":"{}","block":"{}"}}}},"slot":{}}}"#, 
+                        action,
+                        stmnt.technical_name(),
+                        slot
+                    )
+                }
             }
         }
     }

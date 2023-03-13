@@ -181,5 +181,6 @@ pub enum AttributeOperation {
 
 pub struct Tag {
     pub name: String,
-    pub option: String
+    pub option: String,
+    pub var: Option<Variable>
 }
